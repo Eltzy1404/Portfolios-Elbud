@@ -3,24 +3,461 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="">
+    <title>Elbud Portfolio</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --pastel-pink: #FFD6E7;
+            --pastel-blue: #C1E3F6;
+            --pastel-green: #D4F0F0;
+            --pastel-purple: #E6E6FA;
+            --pastel-yellow: #FFFACD;
+            --text-dark: #5D5D7A;
+            --text-light: #7A7A9D;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            background-color: #FAFAFA;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Nav Section */
+        nav {
+            background-color: var(--pastel-purple);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 40px;
+            box-shadow: 0 4px 12px var(--shadow-light);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .logo {
+            background: linear-gradient(90deg, #FF9EC0, #9EC8FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .menu {
+            display: flex;
+        }
+
+        .menu ul {
+            display: flex;
+            gap: 30px;
+        }
+
+        .menu ul li {
+            list-style: none;
+        }
+
+        .menu ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu ul li a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #FF9EC0, #9EC8FF);
+            transition: width 0.3s ease;
+        }
+
+        .menu ul li a:hover::before {
+            width: 100%;
+        }
+
+        .menu ul li a:hover {
+            color: #FF9EC0;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 100px 40px 60px;
+            background: linear-gradient(135deg, var(--pastel-blue) 0%, var(--pastel-green) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: var(--pastel-pink);
+            top: -100px;
+            right: -100px;
+            opacity: 0.5;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: var(--pastel-yellow);
+            bottom: -50px;
+            left: -50px;
+            opacity: 0.5;
+            animation: float 12s infinite ease-in-out reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, 20px); }
+        }
+
+        .hero-left {
+            max-width: 50%;
+            z-index: 1;
+        }
+
+        .hero-left h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            background: linear-gradient(90deg, #FF9EC0, #9EC8FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards 0.3s;
+        }
+
+        .hero-left p {
+            color: var(--text-light);
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        .hero-button {
+            background: linear-gradient(90deg, #FF9EC0, #9EC8FF);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(255, 158, 192, 0.4);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards 0.7s;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(255, 158, 192, 0.6);
+        }
+
+        .hero-right {
+            z-index: 1;
+        }
+
+        .hero-right img {
+            width: 350px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px var(--shadow-medium);
+            transform: perspective(1000px) rotateY(-10deg);
+            transition: all 0.5s ease;
+            animation: floatImage 5s infinite ease-in-out;
+        }
+
+        @keyframes floatImage {
+            0%, 100% { transform: perspective(1000px) rotateY(-10deg) translateY(0); }
+            50% { transform: perspective(1000px) rotateY(-10deg) translateY(-20px); }
+        }
+
+        .hero-right img:hover {
+            transform: perspective(1000px) rotateY(0deg) scale(1.05);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 40px;
+            background-color: var(--pastel-green);
+            min-height: 80vh;
+        }
+
+        .contact h2 {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 36px;
+            color: var(--text-dark);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .contact h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #FF9EC0, #9EC8FF);
+            border-radius: 2px;
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 60px;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .contact-info {
+            max-width: 400px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-info:hover {
+            transform: translateY(-10px);
+        }
+
+        .contact-info p {
+            margin-top: 15px;
+            color: var(--text-dark);
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info p strong {
+            min-width: 100px;
+            color: var(--text-light);
+        }
+
+        .contact-map iframe {
+            border-radius: 20px;
+            box-shadow: 0 15px 35px var(--shadow-medium);
+            transition: all 0.3s ease;
+        }
+
+        .contact-map iframe:hover {
+            box-shadow: 0 20px 40px var(--shadow-medium);
+        }
+
+        /* Footer Section */
+        footer {
+            background: linear-gradient(135deg, var(--pastel-purple) 0%, var(--pastel-blue) 100%);
+            color: var(--text-dark);
+            padding: 60px 40px 20px;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        footer h3, footer h4 {
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        footer p {
+            max-width: 300px;
+            line-height: 1.6;
+            color: var(--text-light);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        footer a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        footer a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #FF9EC0;
+            transition: width 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #FF9EC0;
+        }
+
+        footer a:hover::after {
+            width: 100%;
+        }
+
+        .footer-social a {
+            display: block;
+            margin-bottom: 10px;
+            padding: 5px 0;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            padding-top: 20px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* Animasi React Components */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 140px;
+            }
+            
+            .hero-left {
+                max-width: 100%;
+                margin-bottom: 40px;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .contact-map iframe {
+                width: 100%;
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+            
+            .menu ul {
+                margin-top: 15px;
+                gap: 15px;
+            }
+            
+            .hero-left h1 {
+                font-size: 36px;
+            }
+            
+            .hero-right img {
+                width: 280px;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
 </head>
 
-<!-- Nav Section -->
-
 <body>
+    <!-- Nav Section -->
     <nav>
-        <div class="logo">Elang</div>
-
+        <div class="logo">Elbud</div>
         <div class="menu">
             <ul>
                 <li>
-                    <a href="">Home</a>
+                    <a href="#home">Home</a>
                 </li>
                 <li>
-                    <a href="">About</a>
+                    <a href="#about">About</a>
                 </li>
                 <li>
                     <a href="#contact">Contact</a>
@@ -29,83 +466,351 @@
         </div>
     </nav>
 
-<!-- Hero Section -->
-
-    <div class="hero">
+    <!-- Hero Section -->
+    <div class="hero" id="home">
         <div class="hero-left">
-            <h1>Elbud</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo,
-             at inventore ratione ullam officiis facere pariatur amet beatae dolor, 
-             quia ipsam! Totam, harum! Sunt explicabo temporibus nemo asperiores ipsa. Eos.</p>
-            <button>Hubungi Saya</button>
+            <h1>Elang Budi</h1>
+            <p>Saya adalah seorang software engineer dengan passion dalam menciptakan solusi digital yang inovatif. Berpengalaman dalam pengembangan web dan mobile aplikasi dengan fokus pada user experience yang optimal.</p>
+            <button class="hero-button" onclick="smoothScroll('contact')">Hubungi Saya</button>
         </div>
         <div class="hero-right">
-            <img src="elbud.png" alt="">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Elang Budi">
         </div>
     </div>
 
-
-    <!-- <div class="card">
-        <img src="download.jpg" alt="">
-        <h1>Elang</h1>
-        <h1 class="kelas">Kelas 9</h1>
-        <p>Saya adalah pelajar smp IDN</p>
-
-        <a href="https://wa.me/08118889540?text=utisbondan" target="_blank">
-            <button>Hubungi Saya</button>
-        </a>
-    </div> -->
-
     <!-- Contact Section -->
-
     <section class="contact" id="contact">
         <h2>Contact Me</h2>
-            <div class="contact-container">
-                
-                <div class="contact-info">
-                    <p><strong>Alamat: </strong> IDN Jonggol </p>
-                    <p><strong>Email: </strong> elangbudi0206@gmail.com </p>
-                    <p><strong>Whatsapp: </strong> 08118889540 </p>
-                </div>
-
-                <div class="contact-map">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.971507158905!2d107.03556067415104!3d-6.525282293467321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69bc6e5be3d9bd%3A0x6b9881dabd801476!2sSMK%20IDN%20Boarding%20School!5e0!3m2!1sid!2sid!4v1769161971825!5m2!1sid!2sid" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
+        <div class="contact-container">
+            <div class="contact-info fade-in">
+                <p><strong>Alamat: </strong> IDN Jonggol, Jawa Barat</p>
+                <p><strong>Email: </strong> elangbudi0206@gmail.com</p>
+                <p><strong>Whatsapp: </strong> +62 811 8889 540</p>
+                <p><strong>LinkedIn: </strong> elang-budi</p>
+                <p><strong>GitHub: </strong> elangbudi</p>
             </div>
-
+            <div class="contact-map fade-in">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.971507158905!2d107.03556067415104!3d-6.525282293467321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69bc6e5be3d9bd%3A0x6b9881dabd801476!2sSMK%20IDN%20Boarding%20School!5e0!3m2!1sid!2sid!4v1769161971825!5m2!1sid!2sid" width="500" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
     </section>
 
     <!-- Footer Section -->
-
     <footer>
         <div class="footer-container">
-
             <div class="footer-about">
                 <h3>Elang Budi</h3>
-                <p>Saya adalah seorang software engineer</p>
+                <p>Seorang software engineer yang berdedikasi dalam menciptakan solusi digital yang inovatif dan user-friendly.</p>
             </div>
-
             <div class="footer-links">
                 <h4>Menu</h4>
-                    <ul>
-                        <li><a href="">Home</a></li>
-                        <li><a href="">About</a></li>
-                        <li><a href="">Contact</a></li>
-                    </ul>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
             </div>
-
             <div class="footer-social">
                 <h4>Follow Me</h4>
-                <a href="">Instagram</a>
-                <a href="">Youtube</a>
-                <a href="">Whatsapp</a>
+                <a href="https://instagram.com" target="_blank">Instagram</a>
+                <a href="https://youtube.com" target="_blank">Youtube</a>
+                <a href="https://wa.me/628118889540" target="_blank">Whatsapp</a>
+                <a href="https://linkedin.com" target="_blank">LinkedIn</a>
             </div>
-
-            <div class="footer-bottom">
-                <p> 2026 Elang. All Rights Reserved.</p>
-            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2023 Elang Budi. All Rights Reserved.</p>
         </div>
     </footer>
 
+    <!-- React Components Container -->
+    <div id="react-components"></div>
+
+    <script type="text/babel">
+        // Komponen React untuk animasi teks berjalan
+        class AnimatedText extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    text: '',
+                    isDeleting: false,
+                    loopNum: 0,
+                    typingSpeed: 150
+                };
+            }
+
+            componentDidMount() {
+                this.handleType();
+            }
+
+            handleType = () => {
+                const { dataText } = this.props;
+                const { isDeleting, loopNum, text, typingSpeed } = this.state;
+                const i = loopNum % dataText.length;
+                const fullText = dataText[i];
+
+                this.setState({
+                    text: isDeleting 
+                        ? fullText.substring(0, text.length - 1)
+                        : fullText.substring(0, text.length + 1),
+                    typingSpeed: isDeleting ? 75 : 150
+                });
+
+                if (!isDeleting && text === fullText) {
+                    setTimeout(() => this.setState({ isDeleting: true }), 1000);
+                } else if (isDeleting && text === '') {
+                    this.setState({
+                        isDeleting: false,
+                        loopNum: loopNum + 1
+                    });
+                }
+
+                setTimeout(this.handleType, typingSpeed);
+            };
+
+            render() {
+                const { text } = this.state;
+                return (
+                    <span className="typing-text">
+                        {text}
+                        <span className="cursor">|</span>
+                    </span>
+                );
+            }
+        }
+
+        // Komponen React untuk kartu layanan
+        class ServiceCard extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    hovered: false
+                };
+            }
+
+            handleMouseEnter = () => {
+                this.setState({ hovered: true });
+            }
+
+            handleMouseLeave = () => {
+                this.setState({ hovered: false });
+            }
+
+            render() {
+                const { title, description, icon } = this.props;
+                const { hovered } = this.state;
+                
+                return (
+                    <div 
+                        className={`service-card ${hovered ? 'hovered' : ''}`}
+                        onMouseEnter={this.handleMouseEnter}
+                        onMouseLeave={this.handleMouseLeave}
+                        style={{
+                            backgroundColor: 'white',
+                            borderRadius: '15px',
+                            padding: '25px',
+                            boxShadow: hovered 
+                                ? '0 15px 30px rgba(255, 158, 192, 0.2)' 
+                                : '0 8px 20px rgba(0, 0, 0, 0.08)',
+                            transition: 'all 0.3s ease',
+                            transform: hovered ? 'translateY(-10px)' : 'translateY(0)',
+                            cursor: 'pointer',
+                            margin: '10px'
+                        }}
+                    >
+                        <div style={{
+                            fontSize: '40px',
+                            marginBottom: '15px',
+                            background: 'linear-gradient(90deg, #FF9EC0, #9EC8FF)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent'
+                        }}>
+                            {icon}
+                        </div>
+                        <h3 style={{ marginBottom: '10px', color: 'var(--text-dark)' }}>{title}</h3>
+                        <p style={{ color: 'var(--text-light)' }}>{description}</p>
+                    </div>
+                );
+            }
+        }
+
+        // Komponen React untuk progress bar skill
+        class SkillBar extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    width: 0
+                };
+            }
+
+            componentDidMount() {
+                // Animasi progress bar saat komponen dimount
+                setTimeout(() => {
+                    this.setState({ width: this.props.percentage });
+                }, 300);
+            }
+
+            render() {
+                const { skill, percentage } = this.props;
+                const { width } = this.state;
+                
+                return (
+                    <div style={{ marginBottom: '20px' }}>
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            marginBottom: '5px'
+                        }}>
+                            <span style={{ fontWeight: '600' }}>{skill}</span>
+                            <span>{percentage}%</span>
+                        </div>
+                        <div style={{
+                            height: '10px',
+                            backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                            borderRadius: '5px',
+                            overflow: 'hidden'
+                        }}>
+                            <div style={{
+                                height: '100%',
+                                width: `${width}%`,
+                                background: 'linear-gradient(90deg, #FF9EC0, #9EC8FF)',
+                                borderRadius: '5px',
+                                transition: 'width 1.5s ease'
+                            }}></div>
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        // Render komponen React
+        const servicesData = [
+            { title: 'Web Development', description: 'Membangun website responsif dan modern dengan teknologi terkini.', icon: '🌐' },
+            { title: 'Mobile Apps', description: 'Mengembangkan aplikasi mobile untuk iOS dan Android.', icon: '📱' },
+            { title: 'UI/UX Design', description: 'Merancang antarmuka yang menarik dan mudah digunakan.', icon: '🎨' }
+        ];
+
+        const skillsData = [
+            { skill: 'JavaScript/React', percentage: 90 },
+            { skill: 'HTML/CSS', percentage: 95 },
+            { skill: 'Node.js', percentage: 85 },
+            { skill: 'UI/UX Design', percentage: 80 }
+        ];
+
+        // Fungsi untuk scroll halus
+        function smoothScroll(targetId) {
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Fungsi untuk animasi scroll
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Inisialisasi setelah halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tambahkan event listener untuk scroll
+            window.addEventListener('scroll', handleScrollAnimation);
+            
+            // Trigger pertama kali
+            handleScrollAnimation();
+            
+            // Render komponen React
+            const container = document.getElementById('react-components');
+            
+            // Render Services Section
+            const servicesSection = document.createElement('section');
+            servicesSection.id = 'services';
+            servicesSection.style.cssText = `
+                padding: 80px 40px;
+                background-color: var(--pastel-blue);
+                text-align: center;
+            `;
+            servicesSection.innerHTML = '<h2 style="margin-bottom: 50px; font-size: 36px; color: var(--text-dark);">My Services</h2>';
+            
+            const servicesContainer = document.createElement('div');
+            servicesContainer.style.cssText = `
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 30px;
+                max-width: 1200px;
+                margin: 0 auto;
+            `;
+            
+            servicesSection.appendChild(servicesContainer);
+            document.body.insertBefore(servicesSection, document.querySelector('.contact'));
+            
+            // Render Skills Section
+            const skillsSection = document.createElement('section');
+            skillsSection.id = 'skills';
+            skillsSection.style.cssText = `
+                padding: 80px 40px;
+                background-color: var(--pastel-yellow);
+            `;
+            
+            const skillsContent = document.createElement('div');
+            skillsContent.style.cssText = `
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: white;
+                padding: 40px;
+                border-radius: 20px;
+                box-shadow: 0 10px 30px var(--shadow-light);
+            `;
+            skillsContent.innerHTML = '<h2 style="margin-bottom: 30px; font-size: 36px; color: var(--text-dark); text-align: center;">My Skills</h2>';
+            
+            skillsSection.appendChild(skillsContent);
+            document.body.insertBefore(skillsSection, servicesSection);
+            
+            // Render React components
+            ReactDOM.render(
+                <div>
+                    {/* Animated Text in Hero */}
+                    <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                        <h3 style={{ fontSize: '24px', color: 'var(--text-light)' }}>
+                            I am a <AnimatedText dataText={['Software Engineer', 'Web Developer', 'UI/UX Designer', 'Problem Solver']} />
+                        </h3>
+                    </div>
+                    
+                    {/* Skills */}
+                    <div>
+                        {skillsData.map((item, index) => (
+                            <SkillBar key={index} skill={item.skill} percentage={item.percentage} />
+                        ))}
+                    </div>
+                </div>,
+                skillsContent
+            );
+            
+            ReactDOM.render(
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+                    {servicesData.map((service, index) => (
+                        <ServiceCard 
+                            key={index}
+                            title={service.title}
+                            description={service.description}
+                            icon={service.icon}
+                        />
+                    ))}
+                </div>,
+                servicesContainer
+            );
+        });
+    </script>
 </body>
 </html>
