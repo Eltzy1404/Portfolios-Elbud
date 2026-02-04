@@ -68,7 +68,7 @@ button:hover{
 }
 
 nav{
-    background-color: grey;
+    background-color: indigo;
     display: flex;
     align-items: center;
     justify-content: space-between;
