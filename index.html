@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elbud Portfolio</title>
+    <title>Elang Budi - Portfolio</title>
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -13,513 +13,535 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            scroll-behavior: smooth;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
         }
 
         :root {
-            --pastel-pink: #FFD6E7;
-            --pastel-blue: #C1E3F6;
-            --pastel-green: #D4F0F0;
-            --pastel-purple: #E6E6FA;
-            --pastel-yellow: #FFFACD;
-            --pastel-orange: #FFE5B4;
-            --text-dark: #5D5D7A;
-            --text-light: #7A7A9D;
-            --shadow-light: rgba(0, 0, 0, 0.08);
-            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+            --gradient-reverse: linear-gradient(135deg, #ec4899, #8b5cf6, #6366f1);
         }
 
         body {
-            background-color: #FAFAFA;
-            color: var(--text-dark);
-            line-height: 1.6;
+            background-color: var(--dark);
+            color: var(--light);
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* Nav Section */
-        nav {
-            background-color: var(--pastel-purple);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 40px;
-            box-shadow: 0 4px 12px var(--shadow-light);
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Navbar */
+        .navbar {
             position: fixed;
-            width: 100%;
             top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
             z-index: 1000;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .logo {
-            background: linear-gradient(90deg, #FF9EC0, #9EC8FF);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 32px;
+            font-size: 1.8rem;
             font-weight: 800;
-            letter-spacing: 1px;
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
-        }
-
-        .menu {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .menu ul {
+        .logo i {
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 2rem;
         }
 
-        .menu ul li {
-            list-style: none;
-        }
-
-        .menu ul li a {
+        .nav-links a {
+            color: var(--light);
             text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 20px;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
         }
 
-        .menu ul li a::before {
+        .nav-links a:hover {
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .nav-links a.active {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
+            bottom: -2px;
+            left: 50%;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #FF9EC0, #9EC8FF);
-            transition: width 0.3s ease;
+            background: var(--gradient);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
         }
 
-        .menu ul li a:hover::before {
-            width: 100%;
-        }
-
-        .menu ul li a:hover {
-            color: #FF9EC0;
-            background-color: rgba(255, 255, 255, 0.7);
+        .nav-links a:hover::after {
+            width: 80%;
         }
 
         /* Hero Section */
         .hero {
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 100px 40px 60px;
-            background: linear-gradient(135deg, var(--pastel-blue) 0%, var(--pastel-green) 100%);
+            padding: 0 2rem;
             position: relative;
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: var(--pastel-pink);
-            top: -100px;
-            right: -100px;
-            opacity: 0.5;
-            animation: float 15s infinite ease-in-out;
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+            padding-top: 100px;
         }
 
-        .hero::after {
-            content: '';
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: var(--pastel-yellow);
-            bottom: -50px;
-            left: -50px;
-            opacity: 0.5;
-            animation: float 12s infinite ease-in-out reverse;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(20px, 20px); }
-        }
-
-        .hero-left {
-            max-width: 50%;
-            z-index: 1;
-        }
-
-        .hero-left h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: var(--text-dark);
-            background: linear-gradient(90deg, #FF9EC0, #9EC8FF);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease forwards 0.3s;
-        }
-
-        .hero-left p {
-            color: var(--text-light);
-            font-size: 20px;
-            margin-bottom: 30px;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease forwards 0.5s;
-        }
-
-        .hero-button {
-            background: linear-gradient(90deg, #FF9EC0, #9EC8FF);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(255, 158, 192, 0.4);
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease forwards 0.7s;
-        }
-
-        .hero-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(255, 158, 192, 0.6);
-        }
-
-        .hero-right {
-            z-index: 1;
-        }
-
-        .hero-right img {
-            width: 350px;
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 8px 16px;
             border-radius: 20px;
-            box-shadow: 0 20px 40px var(--shadow-medium);
-            transform: perspective(1000px) rotateY(-10deg);
-            transition: all 0.5s ease;
-            animation: floatImage 5s infinite ease-in-out;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(99, 102, 241, 0.3);
         }
 
-        @keyframes floatImage {
-            0%, 100% { transform: perspective(1000px) rotateY(-10deg) translateY(0); }
-            50% { transform: perspective(1000px) rotateY(-10deg) translateY(-20px); }
+        .hero-badge i {
+            color: var(--primary);
         }
 
-        .hero-right img:hover {
-            transform: perspective(1000px) rotateY(0deg) scale(1.05);
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            max-width: 600px;
         }
 
-        /* Contact Section - Diperbaiki */
-        .contact {
-            padding: 100px 40px;
-            background: linear-gradient(135deg, var(--pastel-orange) 0%, var(--pastel-pink) 100%);
-            min-height: 100vh;
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Skills Section */
+        .section {
+            padding: 5rem 2rem;
             position: relative;
         }
 
-        .contact h2 {
+        .section-title {
             text-align: center;
-            margin-bottom: 60px;
-            font-size: 42px;
-            color: var(--text-dark);
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
             position: relative;
             display: inline-block;
             left: 50%;
             transform: translateX(-50%);
         }
 
-        .contact h2::after {
+        .section-title::after {
             content: '';
             position: absolute;
             bottom: -10px;
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, #FF9EC0, #9EC8FF);
+            background: var(--gradient);
             border-radius: 2px;
         }
 
-        .contact-container {
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skill-card {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .skill-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: var(--gradient);
             display: flex;
-            gap: 60px;
+            align-items: center;
             justify-content: center;
-            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .skill-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .skill-desc {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .skill-tags {
+            display: flex;
             flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 1rem;
+        }
+
+        .skill-tag {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .skill-progress {
+            margin-top: 1rem;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 3px;
+            transition: width 1.5s ease;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Contact Section - Simple */
+        .contact {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 24px;
+            padding: 4rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .contact-info {
-            max-width: 500px;
-            background-color: white;
-            padding: 40px;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px var(--shadow-medium);
-            transition: transform 0.3s ease;
-        }
-
-        .contact-info:hover {
-            transform: translateY(-10px);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
         .contact-item {
-            margin-bottom: 25px;
-            padding: 15px;
-            border-radius: 15px;
-            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
             transition: all 0.3s ease;
-            border-left: 4px solid transparent;
+            border: 1px solid transparent;
         }
 
         .contact-item:hover {
-            border-left: 4px solid #FF9EC0;
-            background-color: rgba(255, 158, 192, 0.1);
-            transform: translateX(10px);
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            background: rgba(99, 102, 241, 0.1);
         }
 
-        .contact-item i {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(90deg, #FF9EC0, #9EC8FF);
-            border-radius: 50%;
-            display: inline-flex;
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: var(--gradient);
+            display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            margin-right: 15px;
-            font-size: 18px;
+            font-size: 1.25rem;
+            flex-shrink: 0;
         }
 
-        .contact-item h3 {
-            display: inline-block;
-            color: var(--text-dark);
-            margin-bottom: 5px;
+        .contact-details h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
         }
 
-        .contact-item p {
-            color: var(--text-light);
-            margin-left: 55px;
-            font-size: 16px;
+        .contact-details p {
+            color: var(--gray);
+            font-size: 0.95rem;
         }
 
-        .contact-item a {
-            color: var(--text-light);
+        .contact-details a {
+            color: var(--primary);
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
-        .contact-item a:hover {
-            color: #FF9EC0;
+        .contact-details a:hover {
+            color: var(--accent);
         }
 
-        .contact-form {
-            max-width: 500px;
-            background-color: white;
-            padding: 40px;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px var(--shadow-medium);
+        /* Footer */
+        .footer {
+            padding: 4rem 2rem 2rem;
+            background: rgba(15, 23, 42, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 5rem;
         }
 
-        .contact-form h3 {
-            margin-bottom: 25px;
-            color: var(--text-dark);
-            text-align: center;
-            font-size: 28px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-dark);
-            font-weight: 600;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background-color: #f9f9f9;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #FF9EC0;
-            background-color: white;
-            box-shadow: 0 0 0 3px rgba(255, 158, 192, 0.2);
-        }
-
-        .submit-btn {
-            background: linear-gradient(90deg, #FF9EC0, #9EC8FF);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 16px 32px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255, 158, 192, 0.4);
-        }
-
-        .contact-social {
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
         }
 
         .social-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 22px;
-            transition: all 0.3s ease;
+            color: var(--light);
             text-decoration: none;
+            transition: all 0.3s ease;
         }
 
         .social-icon:hover {
-            transform: translateY(-5px) scale(1.1);
+            background: var(--gradient);
+            transform: translateY(-3px);
         }
 
-        .instagram { background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF, #515BD4); }
-        .whatsapp { background: linear-gradient(45deg, #25D366, #128C7E); }
-        .linkedin { background: linear-gradient(45deg, #0077B5, #00A0DC); }
-        .github { background: linear-gradient(45deg, #333, #6e5494); }
-        .email { background: linear-gradient(45deg, #EA4335, #FBBC05); }
-
-        .contact-map {
-            margin-top: 40px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-
-        .contact-map iframe {
-            border-radius: 20px;
-            box-shadow: 0 15px 35px var(--shadow-medium);
-            transition: all 0.3s ease;
-            width: 100%;
-            max-width: 1000px;
-            height: 400px;
-        }
-
-        .contact-map iframe:hover {
-            box-shadow: 0 20px 40px var(--shadow-medium);
-        }
-
-        /* Footer Section */
-        footer {
-            background: linear-gradient(135deg, var(--pastel-purple) 0%, var(--pastel-blue) 100%);
-            color: var(--text-dark);
-            padding: 60px 40px 20px;
-        }
-
-        .footer-container {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        footer h3, footer h4 {
-            margin-bottom: 20px;
-            color: var(--text-dark);
-        }
-
-        footer p {
-            max-width: 300px;
-            line-height: 1.6;
-            color: var(--text-light);
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        footer a {
-            color: var(--text-light);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        footer a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background-color: #FF9EC0;
-            transition: width 0.3s ease;
-        }
-
-        footer a:hover {
-            color: #FF9EC0;
-        }
-
-        footer a:hover::after {
-            width: 100%;
-        }
-
-        .footer-social a {
-            display: block;
-            margin-bottom: 10px;
-            padding: 5px 0;
-        }
-
-        .footer-bottom {
+        .copyright {
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-            padding-top: 20px;
-            font-size: 14px;
-            color: var(--text-light);
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
         }
 
-        /* Animasi React Components */
+        /* Background Animation Container */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .contact {
+                padding: 2rem;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation Classes */
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
@@ -530,455 +552,556 @@
             opacity: 1;
             transform: translateY(0);
         }
-
-        .bounce {
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-                padding-top: 140px;
-            }
-            
-            .hero-left {
-                max-width: 100%;
-                margin-bottom: 40px;
-            }
-            
-            .contact-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .contact-map iframe {
-                width: 100%;
-                height: 400px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            nav {
-                flex-direction: column;
-                padding: 15px 20px;
-            }
-            
-            .menu ul {
-                margin-top: 15px;
-                gap: 15px;
-            }
-            
-            .hero-left h1 {
-                font-size: 36px;
-            }
-            
-            .hero-right img {
-                width: 280px;
-            }
-            
-            .footer-container {
-                flex-direction: column;
-                gap: 30px;
-            }
-            
-            .contact-info, .contact-form {
-                padding: 25px;
-            }
-        }
     </style>
 </head>
-
 <body>
-    <!-- Nav Section -->
-    <nav>
-        <div class="logo">Elbud</div>
-        <div class="menu">
-            <ul>
-                <li>
-                    <a href="#home">Home</a>
-                </li>
-                <li>
-                    <a href="#about">About</a>
-                </li>
-                <li>
-                    <a href="#contact">Contact</a>
-                </li>
-            </ul>
+    <!-- Background Animation -->
+    <div id="react-bits-bg" class="bg-animation"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-code"></i>
+            Elang.dev
+        </div>
+        <div class="nav-links">
+            <a href="#home" class="active">Home</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <div class="hero" id="home">
-        <div class="hero-left">
-            <h1>Elang Budi</h1>
-            <p>Saya adalah seorang software engineer dengan passion dalam menciptakan solusi digital yang inovatif. Berpengalaman dalam pengembangan web dan mobile aplikasi dengan fokus pada user experience yang optimal.</p>
-            <button class="hero-button" onclick="smoothScroll('contact')">Hubungi Saya</button>
-        </div>
-        <div class="hero-right">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Elang Budi">
-        </div>
-    </div>
-
-    <!-- Contact Section - Sudah Diperbaiki -->
-    <section class="contact" id="contact">
-        <h2>Contact Me</h2>
-        <div class="contact-container">
-            <!-- Info Kontak -->
-            <div class="contact-info fade-in">
-                <h3 style="text-align: center; margin-bottom: 30px; color: var(--text-dark);">Get In Touch</h3>
-                
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h3>Alamat</h3>
-                    <p>SMK IDN Boarding School, Jonggol, Jawa Barat 16830</p>
-                </div>
-                
-                <div class="contact-item">
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-rocket"></i>
+                <span>Full Stack Developer</span>
+            </div>
+            <h1 class="hero-title">Building Digital Experiences That Matter</h1>
+            <p class="hero-subtitle">
+                Hi, I'm Elang Budi. I specialize in creating modern web applications with cutting-edge technologies. 
+                Passionate about clean code, user experience, and scalable solutions.
+            </p>
+            <div class="hero-buttons">
+                <a href="#skills" class="btn btn-primary">
+                    <i class="fas fa-star"></i>
+                    View Skills
+                </a>
+                <a href="#contact" class="btn btn-outline">
                     <i class="fas fa-envelope"></i>
-                    <h3>Email</h3>
-                    <p><a href="mailto:elangbudi0206@gmail.com">elangbudi0206@gmail.com</a></p>
-                </div>
-                
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <h3>Telepon/WhatsApp</h3>
-                    <p><a href="https://wa.me/628118889540" target="_blank">+62 811 8889 540</a></p>
-                </div>
-                
-                <div class="contact-item">
-                    <i class="fas fa-clock"></i>
-                    <h3>Jam Kerja</h3>
-                    <p>Senin - Jumat: 09:00 - 17:00 WIB</p>
-                    <p style="margin-top: 5px;">Sabtu: 10:00 - 15:00 WIB</p>
-                </div>
-                
-                <div class="contact-item">
-                    <i class="fas fa-paper-plane"></i>
-                    <h3>Respon Cepat</h3>
-                    <p>Saya biasanya merespon dalam 1-2 jam kerja</p>
-                </div>
-                
-                <div class="contact-social">
-                    <a href="https://instagram.com" class="social-icon instagram" target="_blank">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://wa.me/628118889540" class="social-icon whatsapp" target="_blank">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    <a href="https://linkedin.com" class="social-icon linkedin" target="_blank">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a href="https://github.com" class="social-icon github" target="_blank">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="mailto:elangbudi0206@gmail.com" class="social-icon email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                </div>
+                    Get In Touch
+                </a>
             </div>
-            
-            <!-- Form Kontak -->
-            <div class="contact-form fade-in">
-                <h3>Send Me a Message</h3>
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Nama Lengkap</label>
-                        <input type="text" id="name" name="name" placeholder="Masukkan nama Anda" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="nama@example.com" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="subject">Subjek</label>
-                        <input type="text" id="subject" name="subject" placeholder="Apa yang bisa saya bantu?" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Pesan</label>
-                        <textarea id="message" name="message" rows="5" placeholder="Tulis pesan Anda di sini..." required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">Kirim Pesan</button>
-                </form>
-            </div>
-        </div>
-        
-        <!-- Map -->
-        <div class="contact-map fade-in">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.971507158905!2d107.03556067415104!3d-6.525282293467321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69bc6e5be3d9bd%3A0x6b9881dabd801476!2sSMK%20IDN%20Boarding%20School!5e0!3m2!1sid!2sid!4v1769161971825!5m2!1sid!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </section>
 
-    <!-- Footer Section -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-about">
-                <h3>Elang Budi</h3>
-                <p>Seorang software engineer yang berdedikasi dalam menciptakan solusi digital yang inovatif dan user-friendly.</p>
-            </div>
-            <div class="footer-links">
-                <h4>Menu</h4>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-social">
-                <h4>Follow Me</h4>
-                <a href="https://instagram.com" target="_blank">Instagram</a>
-                <a href="https://youtube.com" target="_blank">Youtube</a>
-                <a href="https://wa.me/628118889540" target="_blank">Whatsapp</a>
-                <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <!-- Skills Section -->
+    <section class="section" id="skills">
+        <h2 class="section-title">Technical Skills</h2>
+        <div class="skills-container">
+            <!-- Skill cards will be rendered by React -->
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <div class="contact">
+            <h2 class="contact-title">Get In Touch</h2>
+            <div class="contact-info">
+                <!-- Contact items will be rendered by React -->
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>© 2023 Elang Budi. All Rights Reserved.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">Elang.dev</div>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#skills">Skills</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com" class="social-icon" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://linkedin.com" class="social-icon" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://instagram.com" class="social-icon" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://wa.me/628118889540" class="social-icon" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            <div class="copyright">
+                © 2024 Elang Budi. All rights reserved.
+            </div>
         </div>
     </footer>
 
-    <!-- React Components Container -->
-    <div id="react-components"></div>
-
+    <!-- React Components -->
     <script type="text/babel">
-        // Komponen React untuk Contact Form dengan validasi
-        class ContactFormReact extends React.Component {
+        // React Bits Floating Lines Background
+        class FloatingLinesBackground extends React.Component {
             constructor(props) {
                 super(props);
-                this.state = {
-                    name: '',
-                    email: '',
-                    subject: '',
-                    message: '',
-                    submitted: false,
-                    errors: {}
-                };
+                this.canvasRef = React.createRef();
+                this.animationFrame = null;
+                this.lines = [];
+                this.mouse = { x: 0, y: 0 };
+                this.initLines();
             }
 
-            handleChange = (e) => {
-                this.setState({
-                    [e.target.name]: e.target.value,
-                    errors: {
-                        ...this.state.errors,
-                        [e.target.name]: ''
+            initLines() {
+                const colors = ["#6366f1", "#8b5cf6", "#ec4899"];
+                for (let i = 0; i < 50; i++) {
+                    this.lines.push({
+                        x: Math.random() * window.innerWidth,
+                        y: Math.random() * window.innerHeight,
+                        length: 50 + Math.random() * 100,
+                        speed: 0.5 + Math.random() * 1,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        thickness: 0.5 + Math.random() * 1.5,
+                        angle: Math.random() * Math.PI * 2,
+                        rotationSpeed: (Math.random() - 0.5) * 0.02,
+                        waveAmplitude: 5 + Math.random() * 15,
+                        waveFrequency: 0.01 + Math.random() * 0.02,
+                        timeOffset: Math.random() * 100
+                    });
+                }
+            }
+
+            componentDidMount() {
+                this.canvas = this.canvasRef.current;
+                this.ctx = this.canvas.getContext('2d');
+                this.updateCanvasSize();
+                window.addEventListener('resize', this.updateCanvasSize.bind(this));
+                window.addEventListener('mousemove', this.handleMouseMove.bind(this));
+                this.startAnimation();
+            }
+
+            componentWillUnmount() {
+                if (this.animationFrame) {
+                    cancelAnimationFrame(this.animationFrame);
+                }
+                window.removeEventListener('resize', this.updateCanvasSize);
+                window.removeEventListener('mousemove', this.handleMouseMove);
+            }
+
+            updateCanvasSize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+
+            handleMouseMove(e) {
+                this.mouse.x = e.clientX;
+                this.mouse.y = e.clientY;
+            }
+
+            drawLine(line, time) {
+                const ctx = this.ctx;
+                const mouseDistance = Math.sqrt(
+                    Math.pow(line.x - this.mouse.x, 2) + Math.pow(line.y - this.mouse.y, 2)
+                );
+                
+                let opacity = 0.3;
+                if (mouseDistance < 200) {
+                    opacity = 0.6;
+                }
+
+                ctx.beginPath();
+                ctx.strokeStyle = line.color.replace(')', `, ${opacity})`).replace('rgb', 'rgba');
+                ctx.lineWidth = line.thickness;
+                ctx.lineCap = 'round';
+
+                const t = time * 0.001 + line.timeOffset;
+                const wave = Math.sin(t * line.waveFrequency) * line.waveAmplitude;
+
+                for (let i = 0; i < line.length; i++) {
+                    const progress = i / line.length;
+                    const x = line.x + Math.cos(line.angle) * i + Math.sin(t + progress * 2) * wave;
+                    const y = line.y + Math.sin(line.angle) * i + Math.cos(t + progress * 2) * wave;
+                    
+                    // Mouse attraction
+                    if (mouseDistance < 150) {
+                        const dx = this.mouse.x - x;
+                        const dy = this.mouse.y - y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        const force = Math.max(0, (150 - distance) / 150) * 2;
+                        
+                        line.x += dx * 0.001 * force;
+                        line.y += dy * 0.001 * force;
+                    }
+
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+
+                ctx.stroke();
+            }
+
+            updateLines(time) {
+                this.lines.forEach(line => {
+                    // Update position
+                    line.x += Math.cos(line.angle) * line.speed;
+                    line.y += Math.sin(line.angle) * line.speed;
+                    line.angle += line.rotationSpeed;
+
+                    // Wrap around edges
+                    if (line.x > window.innerWidth + 100) line.x = -100;
+                    if (line.x < -100) line.x = window.innerWidth + 100;
+                    if (line.y > window.innerHeight + 100) line.y = -100;
+                    if (line.y < -100) line.y = window.innerHeight + 100;
+                });
+            }
+
+            startAnimation() {
+                const animate = (time) => {
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    
+                    // Draw gradient background
+                    const gradient = this.ctx.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
+                    gradient.addColorStop(0, 'rgba(15, 23, 42, 0.1)');
+                    gradient.addColorStop(1, 'rgba(30, 41, 59, 0.1)');
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+                    // Draw floating particles
+                    for (let i = 0; i < 30; i++) {
+                        const x = (Math.sin(time * 0.001 + i) * 0.5 + 0.5) * this.canvas.width;
+                        const y = (Math.cos(time * 0.001 + i * 0.7) * 0.5 + 0.5) * this.canvas.height;
+                        const size = 1 + Math.sin(time * 0.001 + i) * 0.5;
+                        
+                        this.ctx.beginPath();
+                        this.ctx.fillStyle = `rgba(99, 102, 241, ${0.1 + Math.sin(time * 0.001 + i) * 0.05})`;
+                        this.ctx.arc(x, y, size, 0, Math.PI * 2);
+                        this.ctx.fill();
+                    }
+
+                    // Update and draw lines
+                    this.updateLines(time);
+                    this.lines.forEach(line => this.drawLine(line, time));
+
+                    this.animationFrame = requestAnimationFrame(animate);
+                };
+
+                this.animationFrame = requestAnimationFrame(animate);
+            }
+
+            render() {
+                return React.createElement('canvas', {
+                    ref: this.canvasRef,
+                    style: {
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        zIndex: 1
                     }
                 });
             }
-
-            validateForm = () => {
-                const { name, email, subject, message } = this.state;
-                const errors = {};
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-                if (!name.trim()) errors.name = 'Nama harus diisi';
-                if (!email.trim()) {
-                    errors.email = 'Email harus diisi';
-                } else if (!emailRegex.test(email)) {
-                    errors.email = 'Format email tidak valid';
-                }
-                if (!subject.trim()) errors.subject = 'Subjek harus diisi';
-                if (!message.trim()) errors.message = 'Pesan harus diisi';
-
-                return errors;
-            }
-
-            handleSubmit = (e) => {
-                e.preventDefault();
-                const errors = this.validateForm();
-                
-                if (Object.keys(errors).length > 0) {
-                    this.setState({ errors });
-                    return;
-                }
-
-                // Simulasi pengiriman form
-                this.setState({ submitted: true });
-                
-                // Reset form setelah 3 detik
-                setTimeout(() => {
-                    this.setState({
-                        name: '',
-                        email: '',
-                        subject: '',
-                        message: '',
-                        submitted: false
-                    });
-                    
-                    // Tampilkan notifikasi sukses
-                    alert('Pesan berhasil dikirim! Saya akan membalasnya segera.');
-                }, 3000);
-            }
-
-            render() {
-                const { name, email, subject, message, submitted, errors } = this.state;
-                
-                return (
-                    <form onSubmit={this.handleSubmit}>
-                        <div className="form-group">
-                            <label htmlFor="name">Nama Lengkap</label>
-                            <input 
-                                type="text" 
-                                id="name" 
-                                name="name" 
-                                value={name}
-                                onChange={this.handleChange}
-                                placeholder="Masukkan nama Anda" 
-                                className={errors.name ? 'error' : ''}
-                            />
-                            {errors.name && <span className="error-message" style={{color: 'red', fontSize: '14px'}}>{errors.name}</span>}
-                        </div>
-                        
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <input 
-                                type="email" 
-                                id="email" 
-                                name="email" 
-                                value={email}
-                                onChange={this.handleChange}
-                                placeholder="nama@example.com" 
-                                className={errors.email ? 'error' : ''}
-                            />
-                            {errors.email && <span className="error-message" style={{color: 'red', fontSize: '14px'}}>{errors.email}</span>}
-                        </div>
-                        
-                        <div className="form-group">
-                            <label htmlFor="subject">Subjek</label>
-                            <input 
-                                type="text" 
-                                id="subject" 
-                                name="subject" 
-                                value={subject}
-                                onChange={this.handleChange}
-                                placeholder="Apa yang bisa saya bantu?" 
-                                className={errors.subject ? 'error' : ''}
-                            />
-                            {errors.subject && <span className="error-message" style={{color: 'red', fontSize: '14px'}}>{errors.subject}</span>}
-                        </div>
-                        
-                        <div className="form-group">
-                            <label htmlFor="message">Pesan</label>
-                            <textarea 
-                                id="message" 
-                                name="message" 
-                                value={message}
-                                onChange={this.handleChange}
-                                rows="5" 
-                                placeholder="Tulis pesan Anda di sini..." 
-                                className={errors.message ? 'error' : ''}
-                            />
-                            {errors.message && <span className="error-message" style={{color: 'red', fontSize: '14px'}}>{errors.message}</span>}
-                        </div>
-                        
-                        <button type="submit" className="submit-btn" disabled={submitted}>
-                            {submitted ? 'Mengirim...' : 'Kirim Pesan'}
-                        </button>
-                    </form>
-                );
-            }
         }
 
-        // Komponen React untuk Contact Item dengan animasi
-        class AnimatedContactItem extends React.Component {
+        // Skill Card Component
+        class SkillCard extends React.Component {
             constructor(props) {
                 super(props);
                 this.state = {
-                    hovered: false
+                    hovered: false,
+                    progress: 0
                 };
             }
 
+            componentDidMount() {
+                setTimeout(() => {
+                    this.setState({ progress: this.props.percentage });
+                }, 300);
+            }
+
             render() {
-                const { icon, title, content, link, linkText } = this.props;
+                const { icon, title, description, tags, percentage } = this.props;
+                const { hovered, progress } = this.state;
+
+                return React.createElement('div', {
+                    className: 'skill-card fade-in',
+                    onMouseEnter: () => this.setState({ hovered: true }),
+                    onMouseLeave: () => this.setState({ hovered: false }),
+                    style: {
+                        transform: hovered ? 'translateY(-10px)' : 'translateY(0)',
+                        transition: 'transform 0.3s ease'
+                    }
+                }, [
+                    React.createElement('div', { 
+                        key: 'icon',
+                        className: 'skill-icon'
+                    }, icon),
+                    
+                    React.createElement('h3', { 
+                        key: 'title',
+                        className: 'skill-title'
+                    }, title),
+                    
+                    React.createElement('p', { 
+                        key: 'desc',
+                        className: 'skill-desc'
+                    }, description),
+                    
+                    React.createElement('div', { 
+                        key: 'progress',
+                        className: 'skill-progress'
+                    }, [
+                        React.createElement('div', { 
+                            key: 'label',
+                            className: 'progress-label'
+                        }, [
+                            React.createElement('span', { key: 'text' }, 'Proficiency'),
+                            React.createElement('span', { key: 'value' }, `${percentage}%`)
+                        ]),
+                        
+                        React.createElement('div', { 
+                            key: 'bar',
+                            className: 'progress-bar'
+                        }, 
+                            React.createElement('div', {
+                                className: 'progress-fill',
+                                style: {
+                                    width: `${progress}%`,
+                                    transition: 'width 1.5s ease'
+                                }
+                            })
+                        )
+                    ]),
+                    
+                    React.createElement('div', { 
+                        key: 'tags',
+                        className: 'skill-tags'
+                    }, 
+                        tags.map((tag, index) => 
+                            React.createElement('span', {
+                                key: index,
+                                className: 'skill-tag'
+                            }, tag)
+                        )
+                    )
+                ]);
+            }
+        }
+
+        // Contact Item Component
+        class ContactItem extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = { hovered: false };
+            }
+
+            render() {
+                const { icon, title, content, link } = this.props;
                 const { hovered } = this.state;
-                
-                return (
-                    <div 
-                        className="contact-item"
-                        onMouseEnter={() => this.setState({ hovered: true })}
-                        onMouseLeave={() => this.setState({ hovered: false })}
-                        style={{
-                            transform: hovered ? 'translateX(10px)' : 'translateX(0)',
-                            transition: 'transform 0.3s ease'
-                        }}
-                    >
-                        <i className={icon}></i>
-                        <h3>{title}</h3>
-                        <p>
-                            {link ? (
-                                <a href={link} target="_blank" rel="noopener noreferrer">
-                                    {linkText || content}
-                                </a>
-                            ) : (
-                                content
-                            )}
-                        </p>
-                    </div>
-                );
+
+                return React.createElement('div', {
+                    className: 'contact-item fade-in',
+                    onMouseEnter: () => this.setState({ hovered: true }),
+                    onMouseLeave: () => this.setState({ hovered: false }),
+                    style: {
+                        transform: hovered ? 'translateY(-5px)' : 'translateY(0)'
+                    }
+                }, [
+                    React.createElement('div', { 
+                        key: 'icon',
+                        className: 'contact-icon'
+                    }, icon),
+                    
+                    React.createElement('div', { 
+                        key: 'details',
+                        className: 'contact-details'
+                    }, [
+                        React.createElement('h3', { key: 'title' }, title),
+                        link ? 
+                            React.createElement('a', {
+                                key: 'link',
+                                href: link,
+                                target: '_blank',
+                                rel: 'noopener noreferrer'
+                            }, content) :
+                            React.createElement('p', { key: 'content' }, content)
+                    ])
+                ]);
             }
         }
 
-        // Fungsi untuk scroll halus
-        function smoothScroll(targetId) {
-            const targetElement = document.getElementById(targetId);
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
-                });
+        // Main App Component
+        class App extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    skills: [
+                        {
+                            icon: React.createElement('i', { className: 'fab fa-js-square' }),
+                            title: 'JavaScript/TypeScript',
+                            description: 'Expert in modern JavaScript, ES6+, TypeScript, and React ecosystem',
+                            percentage: 95,
+                            tags: ['React', 'Node.js', 'Next.js', 'TypeScript']
+                        },
+                        {
+                            icon: React.createElement('i', { className: 'fab fa-react' }),
+                            title: 'React Ecosystem',
+                            description: 'Building modern UIs with React, Redux, and related libraries',
+                            percentage: 90,
+                            tags: ['React Hooks', 'Context API', 'Redux', 'React Router']
+                        },
+                        {
+                            icon: React.createElement('i', { className: 'fas fa-server' }),
+                            title: 'Backend Development',
+                            description: 'RESTful APIs, GraphQL, database design, and server architecture',
+                            percentage: 85,
+                            tags: ['Node.js', 'Express', 'MongoDB', 'PostgreSQL']
+                        },
+                        {
+                            icon: React.createElement('i', { className: 'fas fa-palette' }),
+                            title: 'UI/UX Design',
+                            description: 'Creating beautiful, responsive, and user-friendly interfaces',
+                            percentage: 80,
+                            tags: ['Figma', 'Tailwind', 'Styled Components', 'Framer Motion']
+                        },
+                        {
+                            icon: React.createElement('i', { className: 'fas fa-mobile-alt' }),
+                            title: 'Mobile Development',
+                            description: 'Cross-platform mobile apps with React Native',
+                            percentage: 75,
+                            tags: ['React Native', 'Expo', 'iOS', 'Android']
+                        },
+                        {
+                            icon: React.createElement('i', { className: 'fas fa-cloud' }),
+                            title: 'Cloud & DevOps',
+                            description: 'Deployment, CI/CD, and cloud infrastructure management',
+                            percentage: 70,
+                            tags: ['AWS', 'Docker', 'GitHub Actions', 'Vercel']
+                        }
+                    ],
+                    contacts: [
+                        {
+                            icon: React.createElement('i', { className: 'fas fa-envelope' }),
+                            title: 'Email',
+                            content: 'elangbudi0206@gmail.com',
+                            link: 'mailto:elangbudi0206@gmail.com'
+                        },
+                        {
+                            icon: React.createElement('i', { className: 'fab fa-whatsapp' }),
+                            title: 'WhatsApp',
+                            content: '+62 811 8889 540',
+                            link: 'https://wa.me/628118889540'
+                        },
+                        {
+                            icon: React.createElement('i', { className: 'fas fa-map-marker-alt' }),
+                            title: 'Location',
+                            content: 'IDN Jonggol, Jawa Barat',
+                            link: null
+                        },
+                        {
+                            icon: React.createElement('i', { className: 'fas fa-clock' }),
+                            title: 'Availability',
+                            content: 'Open for freelance & full-time opportunities',
+                            link: null
+                        }
+                    ]
+                };
+            }
+
+            componentDidMount() {
+                // Scroll animation
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+            }
+
+            render() {
+                return React.createElement(React.Fragment, null, [
+                    // Render background
+                    React.createElement(FloatingLinesBackground, { key: 'background' }),
+                    
+                    // Render skills
+                    React.createElement('div', {
+                        key: 'skills-container',
+                        className: 'skills-container'
+                    }, this.state.skills.map((skill, index) =>
+                        React.createElement(SkillCard, {
+                            key: index,
+                            icon: skill.icon,
+                            title: skill.title,
+                            description: skill.description,
+                            tags: skill.tags,
+                            percentage: skill.percentage
+                        })
+                    )),
+                    
+                    // Render contacts
+                    React.createElement('div', {
+                        key: 'contact-info',
+                        className: 'contact-info'
+                    }, this.state.contacts.map((contact, index) =>
+                        React.createElement(ContactItem, {
+                            key: index,
+                            icon: contact.icon,
+                            title: contact.title,
+                            content: contact.content,
+                            link: contact.link
+                        })
+                    ))
+                ]);
             }
         }
 
-        // Fungsi untuk animasi scroll
-        function handleScrollAnimation() {
-            const elements = document.querySelectorAll('.fade-in');
-            elements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
+        // Render the app
+        ReactDOM.render(
+            React.createElement(FloatingLinesBackground),
+            document.getElementById('react-bits-bg')
+        );
+
+        ReactDOM.render(
+            React.createElement(App),
+            document.querySelector('.skills-container').parentNode
+        );
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
                 
-                if (elementTop < windowHeight - 100) {
-                    element.classList.add('visible');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
                 }
             });
-        }
+        });
 
-        // Inisialisasi setelah halaman dimuat
-        document.addEventListener('DOMContentLoaded', function() {
-            // Tambahkan event listener untuk scroll
-            window.addEventListener('scroll', handleScrollAnimation);
-            
-            // Trigger pertama kali
-            handleScrollAnimation();
-            
-            // Render React form
-            const formContainer = document.querySelector('.contact-form');
-            if (formContainer) {
-                ReactDOM.render(
-                    <div>
-                        <h3>Send Me a Message</h3>
-                        <ContactFormReact />
-                    </div>,
-                    formContainer
-                );
-            }
-            
-            // Handle form submission untuk form lama (fallback)
-            const contactForm = document.getElementById('contactForm');
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    alert('Pesan berhasil dikirim! Saya akan menghubungi Anda segera.');
-                    this.reset();
-                });
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+                navbar.style.backdropFilter = 'blur(20px)';
+            } else {
+                navbar.style.background = 'rgba(15, 23, 42, 0.8)';
+                navbar.style.backdropFilter = 'blur(20px)';
             }
         });
     </script>
